@@ -3,3 +3,6 @@
 ################################################################################
 
 /Retrosheet/Database/bin/Debug
+/Retrosheet/Database/obj/Debug
+/Retrosheet/Packages/bin/Development
+/Retrosheet/Packages/obj/Development

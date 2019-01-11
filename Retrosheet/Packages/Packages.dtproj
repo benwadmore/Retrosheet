@@ -26,11 +26,12 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">BEN-PC</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAYbyA/DIv30ae6B26skbFtwAAAAACAAAAAAAQZgAAAAEAACAAAACCRjL/1QkOhtSj08EfxxBsB17zY3YO9mDHBD4YwwjvIgAAAAAOgAAAAAIAACAAAABHo5FCkSIZCV8cKT8Qwty3wiO/yBBdXX8aAETfbioAbZAAAAB7bh/AMckmb6BH1YXVLY7+3c4KpETrlZoGyWfawgGvraZAl2Y6QBiR7tElG9UCvnhpFGyRX2h/vBjnKjEK0wkvgkTQ+qs7s1qyZ+930kVCDSyMcafbOB+t2E1FEaR53gLVremRRD/j6yMHBelrVKR2J7l5CjWP1ICtV91rnbx/F9qVni9oLRWS0pSaYbVv6t9AAAAAYGrcnpWkadaxn7Gu4HYKbiwepVCfNtbZlXn46Cy+K17L9imnMhx3BYO25VPiyvIulDXdgWkhMm2Vrf8GL2/hJQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAYbyA/DIv30ae6B26skbFtwAAAAACAAAAAAAQZgAAAAEAACAAAACIVC0JvCeMCtwXMQuLv4d8Rgj+MFdExTk7Um48AFkflgAAAAAOgAAAAAIAACAAAAAb14gk+VmfWJ9YdjM4f2sy8i8GmA3mypdqoeP7V6LkX5AAAACCmXyViYrXNQI3xNqelmrkq5dIkyPKHXGQjojVvlPIW5XcNeuOygBEOH238mVpbNvUL9Z7fgfKyeiBHh5ugai+OYHkGyErq7uRdZVIyDhjadS3ogHAngs/EYQHCOoqCth/rexftw9pjkxVGB2nCnsu2SPo1LKWH1d3TNthSrDwZCqJ6cT/fYJHrac0RkS+6ONAAAAALXK7x+3bIw+iWR0gxYqNxY14XnWiZYzhj63xmY9vW/DcUUzc1T9wN0cobV1jpO8YgvCK4p9vrvNrXmyAaSWrcw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="Staging.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="DimGameNumberOnDate.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="Retrosheet.conmgr" />
@@ -669,6 +670,23 @@
                 </SSIS:Parameter>
               </SSIS:Parameters>
             </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="DimGameNumberOnDate.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{C933EC7D-657D-4DA6-94BF-0A76BAA08BAE}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">DimGameNumberOnDate</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">13</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{C450007F-3D7F-4F8F-99AF-04B2FB2D3581}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
           </SSIS:PackageInfo>
         </SSIS:DeploymentInfo>
       </SSIS:Project>
@@ -686,7 +704,13 @@
         <ConnectionSecurityMappings />
         <DatabaseStorageLocations />
         <TargetServerVersion>SQLServer2017</TargetServerVersion>
-        <ParameterConfigurationValues />
+        <ParameterConfigurationValues>
+          <ConfigurationSetting>
+            <Id>LastModifiedTime</Id>
+            <Name>LastModifiedTime</Name>
+            <Value xsi:type="xsd:dateTime">2019-01-11T23:40:00.9734449Z</Value>
+          </ConfigurationSetting>
+        </ParameterConfigurationValues>
       </Options>
     </Configuration>
   </Configurations>

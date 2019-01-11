@@ -65,6 +65,8 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Storage\" />
     <Folder Include="Security\" />
+    <Folder Include="DW" />
+    <Folder Include="DW\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Staging\Tables\GameLog.sql" />
@@ -73,5 +75,7 @@
     <Build Include="Staging\Tables\Personnel.sql" />
     <Build Include="Storage\NCI.sql" />
     <Build Include="Security\Staging.sql" />
+    <Build Include="Security\DW.sql" />
+    <Build Include="DW\Tables\DimGameNumberOnDate.sql" />
   </ItemGroup>
 </Project>
