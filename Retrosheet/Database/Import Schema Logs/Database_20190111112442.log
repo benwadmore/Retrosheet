@@ -1,0 +1,85 @@
+11/01/2019 23:24:42	This log contains information about the import schema operation into project 'Database' on computer 'BEN-PC' by user 'Ben'.
+11/01/2019 23:24:42	Import of database schema has started.
+11/01/2019 23:24:42	Gathering database credentials
+11/01/2019 23:24:42	Gathering database options
+11/01/2019 23:24:42	Gathering generic database scoped configuration option
+11/01/2019 23:24:42	Gathering users
+11/01/2019 23:24:42	Gathering roles
+11/01/2019 23:24:42	Gathering application roles
+11/01/2019 23:24:42	Gathering role memberships
+11/01/2019 23:24:42	Gathering filegroups
+11/01/2019 23:24:42	Gathering full-text catalogs
+11/01/2019 23:24:42	Gathering assemblies
+11/01/2019 23:24:42	Gathering certificates
+11/01/2019 23:24:42	Gathering asymmetric keys
+11/01/2019 23:24:42	Gathering symmetric keys
+11/01/2019 23:24:42	Gathering encrypted symmetric keys
+11/01/2019 23:24:42	Gathering schemas
+11/01/2019 23:24:42	Gathering XML schema collections
+11/01/2019 23:24:42	Gathering user-defined data types
+11/01/2019 23:24:42	Gathering user-defined types
+11/01/2019 23:24:42	Gathering table types
+11/01/2019 23:24:42	Gathering unique keys for table types
+11/01/2019 23:24:42	Gathering primary keys for table types
+11/01/2019 23:24:42	Gathering indexes for table types
+11/01/2019 23:24:42	Gathering check constraints for table types
+11/01/2019 23:24:42	Gathering default constraints for table types
+11/01/2019 23:24:42	Gathering partition functions
+11/01/2019 23:24:42	Gathering partition schemes
+11/01/2019 23:24:42	Gathering functions
+11/01/2019 23:24:42	Gathering encrypted functions
+11/01/2019 23:24:42	Gathering aggregates
+11/01/2019 23:24:42	Gathering procedures
+11/01/2019 23:24:42	Gathering encrypted procedures
+11/01/2019 23:24:42	Gathering tables
+11/01/2019 23:24:42	Gathering primary keys
+11/01/2019 23:24:42	Gathering unique constraints
+11/01/2019 23:24:42	Gathering foreign keys
+11/01/2019 23:24:42	Gathering default constraints
+11/01/2019 23:24:42	Gathering check constraints
+11/01/2019 23:24:42	Gathering views
+11/01/2019 23:24:42	Gathering encrypted views
+11/01/2019 23:24:42	Gathering indexes
+11/01/2019 23:24:42	Gathering statistics
+11/01/2019 23:24:42	Gathering full-text index stoplists
+11/01/2019 23:24:42	Gathering search property lists
+11/01/2019 23:24:42	Gathering search properties
+11/01/2019 23:24:42	Gathering full-text indexes
+11/01/2019 23:24:42	Gathering column store indexes
+11/01/2019 23:24:42	Gathering spatial indexes
+11/01/2019 23:24:42	Gathering XML indexes
+11/01/2019 23:24:42	Gathering Selective XML indexes
+11/01/2019 23:24:42	Gathering encrypted triggers
+11/01/2019 23:24:42	Gathering triggers
+11/01/2019 23:24:42	Gathering encrypted and clr ddl triggers
+11/01/2019 23:24:42	Gathering ddl triggers
+11/01/2019 23:24:42	Gathering synonyms
+11/01/2019 23:24:42	Gathering defaults
+11/01/2019 23:24:42	Gathering data constraint uddt bindings
+11/01/2019 23:24:42	Gathering rules
+11/01/2019 23:24:42	Gathering data constraint uddt bindings
+11/01/2019 23:24:42	Gathering message types
+11/01/2019 23:24:42	Gathering queues
+11/01/2019 23:24:42	Gathering contracts
+11/01/2019 23:24:42	Gathering services
+11/01/2019 23:24:42	Gathering event notifications
+11/01/2019 23:24:42	Gathering remote service bindings
+11/01/2019 23:24:42	Gathering broker priorities
+11/01/2019 23:24:42	Gathering signatures
+11/01/2019 23:24:42	Gathering data compression options
+11/01/2019 23:24:42	Gathering sequence types
+11/01/2019 23:24:42	Gathering security policies
+11/01/2019 23:24:42	Gather column encryption keys
+11/01/2019 23:24:42	Gathering column master keys
+11/01/2019 23:24:42	Gathering external data sources
+11/01/2019 23:24:42	Gathering external file formats
+11/01/2019 23:24:42	Gathering external tables
+11/01/2019 23:24:42	Gathering extended properties
+11/01/2019 23:24:42	Gathering credentials
+11/01/2019 23:24:42	Gathering logins
+11/01/2019 23:24:42	Gathering server audits
+11/01/2019 23:24:42	Scanning project for duplicate elements
+11/01/2019 23:24:42	Finished duplicate element processing
+11/01/2019 23:24:43	Finished importing database.
+11/01/2019 23:24:43	A summary of the import was saved to the following location: C:\Users\Ben\Source\Repos\Retrosheet\Retrosheet\Database\Import Schema Logs\Database_20190111112442.log
+11/01/2019 23:24:43	Click Finish to continue...
