@@ -65,6 +65,7 @@
     <Folder Include="Security\" />
     <Folder Include="DW" />
     <Folder Include="DW\Tables" />
+    <Folder Include="DW\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Staging\Tables\GameLog.sql" />
@@ -78,5 +79,7 @@
     <Build Include="DW\Tables\DimBallPark.sql" />
     <Build Include="DW\Tables\DimLeague.sql" />
     <Build Include="Staging\Tables\Franchise.sql" />
+    <Build Include="DW\Stored Procedures\DimPerson_Update.sql" />
+    <Build Include="DW\Stored Procedures\DimPersonStaging_Create.sql" />
   </ItemGroup>
 </Project>
