@@ -1,0 +1,12 @@
+﻿CREATE TABLE DW.DimBallPark
+(
+	BallParkId INT IDENTITY(1, 1) NOT NULL,
+	BallParkCode VARCHAR(5) NOT NULL,
+	BallParkName VARCHAR(50) NULL,
+	BallParkAlsoKnownAs VARCHAR(50) NULL,
+	BallParkCity VARCHAR(50) NULL,
+	BallParkState VARCHAR(50) NULL,
+	BallParkStartDate DATE NULL,
+	BallParkEndDate DATE NULL,
+	CONSTRAINT PK_DimBallPark PRIMARY KEY CLUSTERED (BallParkId)
+)

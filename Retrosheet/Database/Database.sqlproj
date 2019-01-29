@@ -74,9 +74,9 @@
     <Build Include="Security\Staging.sql" />
     <Build Include="Security\DW.sql" />
     <Build Include="DW\Tables\DimGameNumberOnDate.sql" />
-    <Build Include="DW\Tables\DimPlayer.sql" />
-    <Build Include="DW\Tables\DimManager.sql" />
-    <Build Include="DW\Tables\DimCoach.sql" />
-    <Build Include="DW\Tables\DimUmpire.sql" />
+    <Build Include="DW\Tables\DimPerson.sql" />
+    <Build Include="DW\Tables\DimBallPark.sql" />
+    <Build Include="DW\Tables\DimLeague.sql" />
+    <Build Include="Staging\Tables\Franchise.sql" />
   </ItemGroup>
 </Project>
