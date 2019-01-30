@@ -1,0 +1,7 @@
+﻿CREATE TABLE DW.DimPosition
+(
+	PositionId INT IDENTITY(1, 1) NOT NULL,
+	PositionNumber TINYINT NOT NULL,
+	PositionName VARCHAR(20) NOT NULL,
+	CONSTRAINT PK_DimPosition PRIMARY KEY CLUSTERED (PositionId)
+)

@@ -87,5 +87,8 @@
     <Build Include="Staging\Stored Procedures\Personnel_Read.sql" />
     <Build Include="Security\Utility.sql" />
     <Build Include="Utility\Functions\DelimitedSplit8K.sql" />
+    <Build Include="DW\Tables\FactGameScore.sql" />
+    <Build Include="DW\Tables\DimDate.sql" />
+    <Build Include="DW\Tables\DimPosition.sql" />
   </ItemGroup>
 </Project>
