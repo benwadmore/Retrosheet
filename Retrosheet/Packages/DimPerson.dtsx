@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="DimPerson"
   DTS:PackageType="5"
-  DTS:VersionBuild="51"
-  DTS:VersionGUID="{A08517D1-047E-4CAB-A9C8-368D4ACE2020}">
+  DTS:VersionBuild="58"
+  DTS:VersionGUID="{05B6644A-0F67-41F3-A543-129C862A2665}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -35,12 +35,29 @@
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Load DimPerson"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{51C0B8C6-8079-4AB6-B21E-929CCC7C07D7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DimPerson"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
+          SQLTask:SqlStatementSource="EXEC DW.DimPerson_Load;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DimPersonStaging"
       DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
       DTS:Description="Data Flow Task"
       DTS:DTSID="{50EE3AF0-4F37-4E80-9A79-CFB07B72F999}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Load DimPerson"
+      DTS:ObjectName="Load DimPersonStaging"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -48,825 +65,11 @@
           version="1">
           <components>
             <component
-              refId="Package\Load DimPerson\Change Debut Dates Data Type"
-              componentClassID="Microsoft.DerivedColumn"
-              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
-              name="Change Debut Dates Data Type"
-              usesDispositions="true">
-              <inputs>
-                <input
-                  refId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input]"
-                  description="Input to the Derived Column Transformation"
-                  name="Derived Column Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input].Columns[PlayerDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="PlayerDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input].Columns[ManagerDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="ManagerDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input].Columns[CoachDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="CoachDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input].Columns[UmpireDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="UmpireDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]" />
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output]"
-                  description="Default Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  name="Derived Column Output"
-                  synchronousInputId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[PlayerDebutDate]"
-                      dataType="date"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="RedirectRow"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[PlayerDebutDate]"
-                      name="PlayerDebutDate"
-                      truncationRowDisposition="RedirectRow">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">[LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},4,2)) : NULL(DT_DATE)</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">LEN(LTRIM(RTRIM(PlayerDebut))) &gt; 0 ? (DT_DATE)(RIGHT(PlayerDebut,4) + "-" + LEFT(PlayerDebut,2) + "-" + SUBSTRING(PlayerDebut,4,2)) : NULL(DT_DATE)</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[ManagerDebutDate]"
-                      dataType="date"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="RedirectRow"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[ManagerDebutDate]"
-                      name="ManagerDebutDate"
-                      truncationRowDisposition="RedirectRow">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">[LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},4,2)) : NULL(DT_DATE)</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">LEN(LTRIM(RTRIM(ManagerDebut))) &gt; 0 ? (DT_DATE)(RIGHT(ManagerDebut,4) + "-" + LEFT(ManagerDebut,2) + "-" + SUBSTRING(ManagerDebut,4,2)) : NULL(DT_DATE)</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[CoachDebutDate]"
-                      dataType="date"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="RedirectRow"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[CoachDebutDate]"
-                      name="CoachDebutDate"
-                      truncationRowDisposition="RedirectRow">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">[LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},4,2)) : NULL(DT_DATE)</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">LEN(LTRIM(RTRIM(CoachDebut))) &gt; 0 ? (DT_DATE)(RIGHT(CoachDebut,4) + "-" + LEFT(CoachDebut,2) + "-" + SUBSTRING(CoachDebut,4,2)) : NULL(DT_DATE)</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[UmpireDebutDate]"
-                      dataType="date"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="RedirectRow"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[UmpireDebutDate]"
-                      name="UmpireDebutDate"
-                      truncationRowDisposition="RedirectRow">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">[LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},4,2)) : NULL(DT_DATE)</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">LEN(LTRIM(RTRIM(UmpireDebut))) &gt; 0 ? (DT_DATE)(RIGHT(UmpireDebut,4) + "-" + LEFT(UmpireDebut,2) + "-" + SUBSTRING(UmpireDebut,4,2)) : NULL(DT_DATE)</property>
-                      </properties>
-                    </outputColumn>
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output]"
-                  description="Error Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Derived Column Error Output"
-                  synchronousInputId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load DimPerson\Derived Column"
-              componentClassID="Microsoft.DerivedColumn"
-              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
-              name="Derived Column"
-              usesDispositions="true">
-              <inputs>
-                <input
-                  refId="Package\Load DimPerson\Derived Column.Inputs[Derived Column Input]"
-                  description="Input to the Derived Column Transformation"
-                  name="Derived Column Input">
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Output]"
-                  description="Default Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  name="Derived Column Output"
-                  synchronousInputId="Package\Load DimPerson\Derived Column.Inputs[Derived Column Input]">
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Error Output]"
-                  description="Error Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Derived Column Error Output"
-                  synchronousInputId="Package\Load DimPerson\Derived Column.Inputs[Derived Column Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load DimPerson\Identify Changed Rows"
-              componentClassID="Microsoft.ConditionalSplit"
-              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
-              name="Identify Changed Rows"
-              usesDispositions="true">
-              <inputs>
-                <input
-                  refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input]"
-                  description="Input to the Conditional Split Transformation"
-                  name="Conditional Split Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[LastName]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="LastName"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[FirstName]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="FirstName"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[PlayerDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="PlayerDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[FirstNameLookup]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="FirstNameLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[FirstNameLookup]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[LastNameLookup]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="LastNameLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[LastNameLookup]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[ManagerDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="ManagerDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[CoachDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="CoachDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[UmpireDebut]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="UmpireDebut"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[PlayerDebutDateLookup]"
-                      cachedDataType="dbDate"
-                      cachedName="PlayerDebutDateLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PlayerDebutDateLookup]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[ManagerDebutDateLookup]"
-                      cachedDataType="dbDate"
-                      cachedName="ManagerDebutDateLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[ManagerDebutDateLookup]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[CoachDebutDateLookup]"
-                      cachedDataType="dbDate"
-                      cachedName="CoachDebutDateLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[CoachDebutDateLookup]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input].Columns[UmpireDebutDateLookup]"
-                      cachedDataType="dbDate"
-                      cachedName="UmpireDebutDateLookup"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[UmpireDebutDateLookup]" />
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load DimPerson\Identify Changed Rows.Outputs[UpdatedRows]"
-                  description="Output 1 of the Conditional Split Transformation"
-                  errorOrTruncationOperation="Computation"
-                  errorRowDisposition="FailComponent"
-                  exclusionGroup="1"
-                  name="UpdatedRows"
-                  synchronousInputId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input]"
-                  truncationRowDisposition="FailComponent">
-                  <properties>
-                    <property
-                      containsID="true"
-                      dataType="System.String"
-                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
-                      name="Expression">#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]} != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[LastNameLookup]} || #{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]} != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[FirstNameLookup]} || ([LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]},4,2)) : (DT_DATE)0) != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PlayerDebutDateLookup]} || ([LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]},4,2)) : (DT_DATE)0) != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[ManagerDebutDateLookup]} || ([LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]},4,2)) : (DT_DATE)0) != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[CoachDebutDateLookup]} || ([LEN]([LTRIM]([RTRIM](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]}))) &gt; 0 ? (DT_DATE)([RIGHT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},4) + "-" + [LEFT](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},2) + "-" + [SUBSTRING](#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]},4,2)) : (DT_DATE)0) != #{Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[UmpireDebutDateLookup]}</property>
-                    <property
-                      containsID="true"
-                      dataType="System.String"
-                      description="Specifies the friendly version of the expression. This expression version uses column names."
-                      expressionType="Notify"
-                      name="FriendlyExpression">LastName != LastNameLookup || FirstName != FirstNameLookup || (LEN(LTRIM(RTRIM(PlayerDebut))) &gt; 0 ? (DT_DATE)(RIGHT(PlayerDebut,4) + "-" + LEFT(PlayerDebut,2) + "-" + SUBSTRING(PlayerDebut,4,2)) : (DT_DATE)0) != PlayerDebutDateLookup || (LEN(LTRIM(RTRIM(ManagerDebut))) &gt; 0 ? (DT_DATE)(RIGHT(ManagerDebut,4) + "-" + LEFT(ManagerDebut,2) + "-" + SUBSTRING(ManagerDebut,4,2)) : (DT_DATE)0) != ManagerDebutDateLookup || (LEN(LTRIM(RTRIM(CoachDebut))) &gt; 0 ? (DT_DATE)(RIGHT(CoachDebut,4) + "-" + LEFT(CoachDebut,2) + "-" + SUBSTRING(CoachDebut,4,2)) : (DT_DATE)0) != CoachDebutDateLookup || (LEN(LTRIM(RTRIM(UmpireDebut))) &gt; 0 ? (DT_DATE)(RIGHT(UmpireDebut,4) + "-" + LEFT(UmpireDebut,2) + "-" + SUBSTRING(UmpireDebut,4,2)) : (DT_DATE)0) != UmpireDebutDateLookup</property>
-                    <property
-                      dataType="System.Int32"
-                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
-                      name="EvaluationOrder">0</property>
-                  </properties>
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Default Output]"
-                  description="Default Output of the Conditional Split Transformation"
-                  exclusionGroup="1"
-                  name="Conditional Split Default Output"
-                  synchronousInputId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input]">
-                  <properties>
-                    <property
-                      dataType="System.Boolean"
-                      name="IsDefaultOut">true</property>
-                  </properties>
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Error Output]"
-                  description="Error Output of the Conditional Split Transformation"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Conditional Split Error Output"
-                  synchronousInputId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Identify Changed Rows.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load DimPerson\Insert New Rows"
+              refId="Package\Load DimPersonStaging\DW Staging Person"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
-              name="Insert New Rows"
-              usesDispositions="true"
-              version="4">
-              <properties>
-                <property
-                  dataType="System.Int32"
-                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
-                  name="CommandTimeout">0</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[DW].[DimPerson]</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the variable that contains the name of the database object used to open a rowset."
-                  name="OpenRowsetVariable"></property>
-                <property
-                  dataType="System.String"
-                  description="The SQL command to be executed."
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the column code page to use when code page information is unavailable from the data source."
-                  name="DefaultCodePage">1252</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Forces the use of the DefaultCodePage property value when describing character data."
-                  name="AlwaysUseDefaultCodePage">false</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the mode used to access the database."
-                  name="AccessMode"
-                  typeConverter="AccessMode">3</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepIdentity">false</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">2147483647</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\Load DimPerson\Insert New Rows.Connections[OleDbConnection]"
-                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
-                  description="The OLE DB runtime connection used to access the database."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input]"
-                  errorOrTruncationOperation="Insert"
-                  errorRowDisposition="FailComponent"
-                  hasSideEffects="true"
-                  name="OLE DB Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[LastName]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="LastName"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[FirstName]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="FirstName"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[PersonID]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="PersonID"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[PlayerDebutDate]"
-                      cachedDataType="date"
-                      cachedName="PlayerDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[PlayerDebutDate]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[ManagerDebutDate]"
-                      cachedDataType="date"
-                      cachedName="ManagerDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[ManagerDebutDate]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[CoachDebutDate]"
-                      cachedDataType="date"
-                      cachedName="CoachDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[CoachDebutDate]" />
-                    <inputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].Columns[UmpireDebutDate]"
-                      cachedDataType="date"
-                      cachedName="UmpireDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[UmpireDebutDate]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="FirstName" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="LastName" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonId]"
-                      dataType="i4"
-                      name="PersonId" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
-                      codePage="1252"
-                      dataType="str"
-                      length="8"
-                      name="PersonnelCode" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
-                      dataType="dbDate"
-                      name="PlayerDebutDate" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
-                      dataType="dbDate"
-                      name="ManagerDebutDate" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
-                      dataType="dbDate"
-                      name="CoachDebutDate" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
-                      dataType="dbDate"
-                      name="UmpireDebutDate" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load DimPerson\Insert New Rows.Outputs[OLE DB Destination Error Output]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Insert New Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Insert New Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Insert New Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load DimPerson\Lookup Personnel Code"
-              componentClassID="Microsoft.Lookup"
-              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
-              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
-              name="Lookup Personnel Code"
-              usesDispositions="true"
-              version="6">
-              <properties>
-                <property
-                  dataType="System.String"
-                  description="Specifies the SQL statement that generates the lookup table."
-                  expressionType="Notify"
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [DW].[DimPerson]</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
-                  expressionType="Notify"
-                  name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [DW].[DimPerson]) [refTable]
-where [refTable].[PersonnelCode] = ?</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the type of connection used to access the reference dataset."
-                  name="ConnectionType"
-                  typeConverter="LookupConnectionType">0</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the cache type of the lookup table."
-                  name="CacheType"
-                  typeConverter="CacheType">0</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
-                  name="NoMatchBehavior"
-                  typeConverter="LookupNoMatchBehavior">1</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
-                  name="NoMatchCachePercentage">0</property>
-                <property
-                  dataType="System.Int32"
-                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
-                  name="MaxMemoryUsage">25</property>
-                <property
-                  dataType="System.Int64"
-                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
-                  name="MaxMemoryUsage64">25</property>
-                <property
-                  dataType="System.String"
-                  description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="PersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PersonnelCode" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="FirstName" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="LastName" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="PlayerDebutDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ManagerDebutDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CoachDebutDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UmpireDebutDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
-                <property
-                  containsID="true"
-                  dataType="System.String"
-                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]};</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the column code page to use when code page information is unavailable from the data source."
-                  name="DefaultCodePage">1252</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
-                  name="TreatDuplicateKeysAsError">false</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\Load DimPerson\Lookup Personnel Code.Connections[OleDbConnection]"
-                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
-                  description="Connection manager used to access lookup data."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input]"
-                  name="Lookup Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input].Columns[PersonID]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="50"
-                      cachedName="PersonID"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table that a column joins."
-                          name="JoinToReferenceColumn">PersonnelCode</property>
-                        <property
-                          dataType="System.Null"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn" />
-                      </properties>
-                    </inputColumn>
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output]"
-                  errorOrTruncationOperation="Lookup"
-                  exclusionGroup="1"
-                  name="Lookup Match Output"
-                  synchronousInputId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[FirstNameLookup]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Copy Column"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[FirstNameLookup]"
-                      name="FirstNameLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">FirstName</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[LastNameLookup]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Copy Column"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[LastNameLookup]"
-                      name="LastNameLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">LastName</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PlayerDebutDateLookup]"
-                      dataType="dbDate"
-                      errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PlayerDebutDateLookup]"
-                      name="PlayerDebutDateLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">PlayerDebutDate</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[ManagerDebutDateLookup]"
-                      dataType="dbDate"
-                      errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[ManagerDebutDateLookup]"
-                      name="ManagerDebutDateLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">ManagerDebutDate</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[CoachDebutDateLookup]"
-                      dataType="dbDate"
-                      errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[CoachDebutDateLookup]"
-                      name="CoachDebutDateLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">CoachDebutDate</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[UmpireDebutDateLookup]"
-                      dataType="dbDate"
-                      errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[UmpireDebutDateLookup]"
-                      name="UmpireDebutDateLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">UmpireDebutDate</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PersonIdLookup]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output].Columns[PersonIdLookup]"
-                      name="PersonIdLookup"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">PersonId</property>
-                      </properties>
-                    </outputColumn>
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup No Match Output]"
-                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
-                  exclusionGroup="1"
-                  name="Lookup No Match Output"
-                  synchronousInputId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input]">
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Error Output]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Lookup Error Output"
-                  synchronousInputId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load DimPerson\Stage Updated Rows"
-              componentClassID="Microsoft.OLEDBDestination"
-              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
-              description="OLE DB Destination"
-              name="Stage Updated Rows"
+              name="DW Staging Person"
               usesDispositions="true"
               version="4">
               <properties>
@@ -919,7 +122,7 @@ where [refTable].[PersonnelCode] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Load DimPerson\Stage Updated Rows.Connections[OleDbConnection]"
+                  refId="Package\Load DimPersonStaging\DW Staging Person.Connections[OleDbConnection]"
                   connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
                   connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
                   description="The OLE DB runtime connection used to access the database."
@@ -927,122 +130,118 @@ where [refTable].[PersonnelCode] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input]"
+                  refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[LastName]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="50"
                       cachedName="LastName"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[FirstName]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="50"
                       cachedName="FirstName"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[PlayerDebutDate]"
-                      cachedDataType="date"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[PlayerDebutDate]"
+                      cachedDataType="dbDate"
                       cachedName="PlayerDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[PlayerDebutDate]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebutDate]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[ManagerDebutDate]"
-                      cachedDataType="date"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[ManagerDebutDate]"
+                      cachedDataType="dbDate"
                       cachedName="ManagerDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[ManagerDebutDate]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebutDate]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[CoachDebutDate]"
-                      cachedDataType="date"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[CoachDebutDate]"
+                      cachedDataType="dbDate"
                       cachedName="CoachDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[CoachDebutDate]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebutDate]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[UmpireDebutDate]"
-                      cachedDataType="date"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[UmpireDebutDate]"
+                      cachedDataType="dbDate"
                       cachedName="UmpireDebutDate"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
-                      lineageId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output].Columns[UmpireDebutDate]" />
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebutDate]" />
                     <inputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].Columns[PersonID]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].Columns[PersonId]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="50"
-                      cachedName="PersonID"
-                      externalMetadataColumnId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]" />
+                      cachedName="PersonId"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonId]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[PersonnelCode]"
                       codePage="1252"
                       dataType="str"
                       length="8"
                       name="PersonnelCode" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
                       name="FirstName" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
                       name="LastName" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[PlayerDebutDate]"
                       dataType="dbDate"
                       name="PlayerDebutDate" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[ManagerDebutDate]"
                       dataType="dbDate"
                       name="ManagerDebutDate" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[CoachDebutDate]"
                       dataType="dbDate"
                       name="CoachDebutDate" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input].ExternalColumns[UmpireDebutDate]"
                       dataType="dbDate"
                       name="UmpireDebutDate" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input].ExternalColumns[PersonId]"
-                      dataType="i4"
-                      name="PersonId" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Load DimPerson\Stage Updated Rows.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\Load DimPersonStaging\DW Staging Person.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Load DimPerson\Stage Updated Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Load DimPersonStaging\DW Staging Person.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Stage Updated Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\Load DimPersonStaging\DW Staging Person.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Load DimPerson\Stage Updated Rows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Load DimPersonStaging\DW Staging Person.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1051,7 +250,7 @@ where [refTable].[PersonnelCode] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Load DimPerson\Staging Personnel"
+              refId="Package\Load DimPersonStaging\Staging Personnel"
               componentClassID="Microsoft.OLEDBSource"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
@@ -1075,7 +274,7 @@ where [refTable].[PersonnelCode] = ?</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC Staging.Personnel_Read</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -1092,7 +291,7 @@ where [refTable].[PersonnelCode] = ?</property>
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">2</property>
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
@@ -1100,7 +299,7 @@ where [refTable].[PersonnelCode] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Load DimPerson\Staging Personnel.Connections[OleDbConnection]"
+                  refId="Package\Load DimPersonStaging\Staging Personnel.Connections[OleDbConnection]"
                   connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
                   connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
                   description="The OLE DB runtime connection used to access the database."
@@ -1108,197 +307,173 @@ where [refTable].[PersonnelCode] = ?</property>
               </connections>
               <outputs>
                 <output
-                  refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output]"
+                  refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output]"
                   name="OLE DB Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PersonID]"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonID]"
-                      name="PersonID"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[LastName]"
                       name="LastName"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[FirstName]"
                       name="FirstName"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonId]"
                       codePage="1252"
                       dataType="str"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PlayerDebut]"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PersonId]"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebut]"
-                      name="PlayerDebut"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PersonId]"
+                      name="PersonId"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]"
-                      codePage="1252"
-                      dataType="str"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebutDate]"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[ManagerDebut]"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebut]"
-                      name="ManagerDebut"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PlayerDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[PlayerDebutDate]"
+                      name="PlayerDebutDate"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]"
-                      codePage="1252"
-                      dataType="str"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebutDate]"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[CoachDebut]"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebut]"
-                      name="CoachDebut"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[ManagerDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[ManagerDebutDate]"
+                      name="ManagerDebutDate"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]"
-                      codePage="1252"
-                      dataType="str"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebutDate]"
+                      dataType="dbDate"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[UmpireDebut]"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebut]"
-                      name="UmpireDebut"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[CoachDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[CoachDebutDate]"
+                      name="CoachDebutDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebutDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[UmpireDebutDate]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].Columns[UmpireDebutDate]"
+                      name="UmpireDebutDate"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PersonID]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="PersonID" />
-                    <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
                       name="LastName" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
                       name="FirstName" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PlayerDebut]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PersonId]"
                       codePage="1252"
                       dataType="str"
                       length="50"
-                      name="PlayerDebut" />
+                      name="PersonId" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[ManagerDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="ManagerDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[PlayerDebutDate]"
+                      dataType="dbDate"
+                      name="PlayerDebutDate" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[CoachDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="CoachDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[ManagerDebutDate]"
+                      dataType="dbDate"
+                      name="ManagerDebutDate" />
                     <externalMetadataColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[UmpireDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      name="UmpireDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[CoachDebutDate]"
+                      dataType="dbDate"
+                      name="CoachDebutDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output].ExternalColumns[UmpireDebutDate]"
+                      dataType="dbDate"
+                      name="UmpireDebutDate" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output]"
+                  refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output]"
                   isErrorOut="true"
                   name="OLE DB Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PersonID]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PersonId]"
                       codePage="1252"
                       dataType="str"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PersonID]"
-                      name="PersonID" />
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PersonId]"
+                      name="PersonId" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[LastName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[LastName]"
                       name="LastName" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[FirstName]"
                       codePage="1252"
                       dataType="str"
                       length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[FirstName]"
                       name="FirstName" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PlayerDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PlayerDebut]"
-                      name="PlayerDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PlayerDebutDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[PlayerDebutDate]"
+                      name="PlayerDebutDate" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ManagerDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ManagerDebut]"
-                      name="ManagerDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ManagerDebutDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ManagerDebutDate]"
+                      name="ManagerDebutDate" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[CoachDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[CoachDebut]"
-                      name="CoachDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[CoachDebutDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[CoachDebutDate]"
+                      name="CoachDebutDate" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[UmpireDebut]"
-                      codePage="1252"
-                      dataType="str"
-                      length="50"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[UmpireDebut]"
-                      name="UmpireDebut" />
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[UmpireDebutDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[UmpireDebutDate]"
+                      name="UmpireDebutDate" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      refId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1309,54 +484,12 @@ where [refTable].[PersonnelCode] = ?</property>
           </components>
           <paths>
             <path
-              refId="Package\Load DimPerson.Paths[Derived Column Error Output]"
-              endId="Package\Load DimPerson\Derived Column.Inputs[Derived Column Input]"
-              name="Derived Column Error Output"
-              startId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Error Output]" />
-            <path
-              refId="Package\Load DimPerson.Paths[Derived Column Output]"
-              endId="Package\Load DimPerson\Lookup Personnel Code.Inputs[Lookup Input]"
-              name="Derived Column Output"
-              startId="Package\Load DimPerson\Change Debut Dates Data Type.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load DimPerson.Paths[Lookup Match Output]"
-              endId="Package\Load DimPerson\Identify Changed Rows.Inputs[Conditional Split Input]"
-              name="Lookup Match Output"
-              startId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Load DimPerson.Paths[Lookup No Match Output]"
-              endId="Package\Load DimPerson\Insert New Rows.Inputs[OLE DB Destination Input]"
-              name="Lookup No Match Output"
-              startId="Package\Load DimPerson\Lookup Personnel Code.Outputs[Lookup No Match Output]" />
-            <path
-              refId="Package\Load DimPerson.Paths[OLE DB Source Output]"
-              endId="Package\Load DimPerson\Change Debut Dates Data Type.Inputs[Derived Column Input]"
+              refId="Package\Load DimPersonStaging.Paths[OLE DB Source Output]"
+              endId="Package\Load DimPersonStaging\DW Staging Person.Inputs[OLE DB Destination Input]"
               name="OLE DB Source Output"
-              startId="Package\Load DimPerson\Staging Personnel.Outputs[OLE DB Source Output]" />
-            <path
-              refId="Package\Load DimPerson.Paths[UpdatedRows]"
-              endId="Package\Load DimPerson\Stage Updated Rows.Inputs[OLE DB Destination Input]"
-              name="UpdatedRows"
-              startId="Package\Load DimPerson\Identify Changed Rows.Outputs[UpdatedRows]" />
+              startId="Package\Load DimPersonStaging\Staging Personnel.Outputs[OLE DB Source Output]" />
           </paths>
         </pipeline>
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Update Existing Rows"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{51C0B8C6-8079-4AB6-B21E-929CCC7C07D7}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Update Existing Rows"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
-          SQLTask:SqlStatementSource="EXEC DW.DimPerson_Update;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -1368,15 +501,15 @@ where [refTable].[PersonnelCode] = ?</property>
       DTS:From="Package\Create Staging Table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Load DimPerson" />
+      DTS:To="Package\Load DimPersonStaging" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
       DTS:DTSID="{9CD0EC2E-F4CF-4958-BF21-3852A3D4D54A}"
-      DTS:From="Package\Load DimPerson"
+      DTS:From="Package\Load DimPersonStaging"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
-      DTS:To="Package\Update Existing Rows" />
+      DTS:To="Package\Load DimPerson" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1391,27 +524,43 @@ where [refTable].[PersonnelCode] = ?</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="155,42"
-          Id="Package\Load DimPerson"
-          TopLeft="69,141" />
-        <NodeLayout
           Size="177,42"
           Id="Package\Create Staging Table"
           TopLeft="61,52" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Load DimPerson"
+          TopLeft="75,220" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Load DimPersonStaging"
+          TopLeft="69,141" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="148,94">
+          TopLeft="149.5,94">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,47"
+              EndConnector="15,47"
               Start="0,0"
-              End="0,39.5">
+              End="15,39.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39.5" />
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="4,23.5" />
+                  <mssgle:LineSegment
+                    End="11,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11,23.5"
+                    Point2="15,23.5"
+                    Point3="15,27.5" />
+                  <mssgle:LineSegment
+                    End="15,39.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1420,19 +569,15 @@ where [refTable].[PersonnelCode] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="181,42"
-          Id="Package\Update Existing Rows"
-          TopLeft="75,220" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="146.5,183">
+          TopLeft="164.5,183">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="19,37"
+              EndConnector="-12,37"
               Start="0,0"
-              End="19,29.5">
+              End="-12,29.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -1441,15 +586,15 @@ where [refTable].[PersonnelCode] = ?</property>
                   <mssgle:CubicBezierSegment
                     Point1="0,14.5"
                     Point2="0,18.5"
-                    Point3="4,18.5" />
+                    Point3="-4,18.5" />
                   <mssgle:LineSegment
-                    End="15,18.5" />
+                    End="-8,18.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="15,18.5"
-                    Point2="19,18.5"
-                    Point3="19,22.5" />
+                    Point1="-8,18.5"
+                    Point2="-12,18.5"
+                    Point3="-12,22.5" />
                   <mssgle:LineSegment
-                    End="19,29.5" />
+                    End="-12,29.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1462,211 +607,39 @@ where [refTable].[PersonnelCode] = ?</property>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Load DimPerson">
+    design-time-name="Package\Load DimPersonStaging">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="188,42"
-          Id="Package\Load DimPerson\Identify Changed Rows"
-          TopLeft="103,364" />
-        <NodeLayout
-          Size="159,42"
-          Id="Package\Load DimPerson\Insert New Rows"
-          TopLeft="384,322" />
-        <NodeLayout
-          Size="228,42"
-          Id="Package\Load DimPerson\Change Debut Dates Data Type"
-          TopLeft="125,139" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="163,42"
-          Id="Package\Load DimPerson\Staging Personnel"
+          Id="Package\Load DimPersonStaging\Staging Personnel"
           TopLeft="123,58" />
         <NodeLayout
-          Size="189,42"
-          Id="Package\Load DimPerson\Lookup Personnel Code"
-          TopLeft="129,238" />
+          Size="170,42"
+          Id="Package\Load DimPersonStaging\DW Staging Person"
+          TopLeft="121,157" />
         <EdgeLayout
-          Id="Package\Load DimPerson.Paths[OLE DB Source Output]"
-          TopLeft="204.5,100">
+          Id="Package\Load DimPersonStaging.Paths[OLE DB Source Output]"
+          TopLeft="205.25,100">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="34.5,39"
+              EndConnector="0,57"
               Start="0,0"
-              End="34.5,31.5">
+              End="0,49.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.5"
-                    Point2="0,19.5"
-                    Point3="4,19.5" />
-                  <mssgle:LineSegment
-                    End="30.5,19.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="30.5,19.5"
-                    Point2="34.5,19.5"
-                    Point3="34.5,23.5" />
-                  <mssgle:LineSegment
-                    End="34.5,31.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load DimPerson.Paths[Lookup No Match Output]"
-          TopLeft="253.666666666667,280">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="209.833333333333,42"
-              Start="0,0"
-              End="209.833333333333,34.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,13.0115424973767" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13.0115424973767"
-                    Point2="0,17.0115424973767"
-                    Point3="4,17.0115424973767" />
-                  <mssgle:LineSegment
-                    End="205.833333333333,17.0115424973767" />
-                  <mssgle:CubicBezierSegment
-                    Point1="205.833333333333,17.0115424973767"
-                    Point2="209.833333333333,17.0115424973767"
-                    Point3="209.833333333333,21.0115424973767" />
-                  <mssgle:LineSegment
-                    End="209.833333333333,34.5" />
+                    End="0,49.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="49.1102799479167,22.0115424973767,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load DimPerson.Paths[Lookup Match Output]"
-          TopLeft="195.166666666667,280">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,84"
-              Start="0,0"
-              End="0,76.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,32.4453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load DimPerson.Paths[Derived Column Output]"
-          TopLeft="239,181">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-15.5,57"
-              Start="0,0"
-              End="-15.5,49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,24.5"
-                    Point2="0,28.5"
-                    Point3="-4,28.5" />
-                  <mssgle:LineSegment
-                    End="-11.5,28.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-11.5,28.5"
-                    Point2="-15.5,28.5"
-                    Point3="-15.5,32.5" />
-                  <mssgle:LineSegment
-                    End="-15.5,49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="154,42"
-          Id="Package\Load DimPerson\Derived Column"
-          TopLeft="482.5,137.5" />
-        <EdgeLayout
-          Id="Package\Load DimPerson.Paths[Derived Column Error Output]"
-          TopLeft="353,159.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="129.5,0"
-              Start="0,0"
-              End="122,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="122,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-12.8300390625,5,147.660078125,16"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="177,42"
-          Id="Package\Load DimPerson\Stage Updated Rows"
-          TopLeft="114,451" />
-        <EdgeLayout
-          Id="Package\Load DimPerson.Paths[UpdatedRows]"
-          TopLeft="199.75,406">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,45"
-              Start="0,0"
-              End="0,37.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,37.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-30.8415234375,12.9453125,61.683046875,11.609375"
+              BoundingBox="0,0,0,0"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -1674,7 +647,7 @@ where [refTable].[PersonnelCode] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load DimPerson\Insert New Rows">
+    design-time-name="Package\Load DimPersonStaging\DW Staging Person">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1687,43 +660,7 @@ where [refTable].[PersonnelCode] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load DimPerson\Staging Personnel">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load DimPerson\Lookup Personnel Code">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[DW].[DimPerson]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load DimPerson\Stage Updated Rows">
+    design-time-name="Package\Load DimPersonStaging\Staging Personnel">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

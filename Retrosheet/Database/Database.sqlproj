@@ -66,6 +66,9 @@
     <Folder Include="DW" />
     <Folder Include="DW\Tables" />
     <Folder Include="DW\Stored Procedures" />
+    <Folder Include="Staging\Stored Procedures" />
+    <Folder Include="Utility" />
+    <Folder Include="Utility\Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Staging\Tables\GameLog.sql" />
@@ -79,7 +82,10 @@
     <Build Include="DW\Tables\DimBallPark.sql" />
     <Build Include="DW\Tables\DimLeague.sql" />
     <Build Include="Staging\Tables\Franchise.sql" />
-    <Build Include="DW\Stored Procedures\DimPerson_Update.sql" />
+    <Build Include="DW\Stored Procedures\DimPerson_Load.sql" />
     <Build Include="DW\Stored Procedures\DimPersonStaging_Create.sql" />
+    <Build Include="Staging\Stored Procedures\Personnel_Read.sql" />
+    <Build Include="Security\Utility.sql" />
+    <Build Include="Utility\Functions\DelimitedSplit8K.sql" />
   </ItemGroup>
 </Project>
