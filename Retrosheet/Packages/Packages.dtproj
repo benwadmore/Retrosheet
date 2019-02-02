@@ -26,13 +26,14 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">BEN-PC</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAYbyA/DIv30ae6B26skbFtwAAAAACAAAAAAAQZgAAAAEAACAAAAB4HBShwgfnZ5bjd3+mETQG30VvG//166hJOmyyYdxOhwAAAAAOgAAAAAIAACAAAACk7LxSeuFePY80OwMETjUmRKMaqpkSNY9TZcahmGgnz5AAAACrr8nJWAaidzF4LacVFkpumGOkJYI8JkwVARRFrB95Fj6LauexM5gGwZUFjGE16ARjFGIV0VsgDxiMYgCYe3Mt/kXgKLhq1RdFgd1TYjfGVVg5DJHaBcnOKnDv2JwGKpUwwskcbFkeI0WGanwr4PCdT0Ct2NwmFzqNPHMQEQfzep+Mk2ffG2q/3Djdu1P1T/9AAAAAZxTDRjhvI9JdHF2fIDj2M4KSHnnycPN5dfOfYGkHoB7+qQysaCmr/E4T6YhE0jOWDX7FsXeub+76ldhlXZ5spw==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAYbyA/DIv30ae6B26skbFtwAAAAACAAAAAAAQZgAAAAEAACAAAAAhlbMzS99jq2cv9xEx1IrrLHe1L1te/6eakaa0dQYX4gAAAAAOgAAAAAIAACAAAABdU9OV5iPp3EbvJZopzNEfyr0vzkWUvBE8cYya0KNduZAAAACOhDLrhwHkCwwsbH04ARNAmgTBySiEZKUdd+f3D19h1DcQhco8/ww9o/26PEVhfKMkyjDwdOhOqrpwZZqqLX/PZ33CXI/uU5bhZYZTe1OUVYiB8lSchYAXpVv0pI1Ya6X7XR7cmSc2H67oH96G8h4ne1EDgJBYtsuFT0s3eLAt/RTtC2xWDQtpKPAtIpv8jo1AAAAANKOoM9CFj5/kHvIg82C1wFgAqNPFcH2U3t9d0u3NIjZwAuGjhcILLLu10utCj7yU18LX54yVCHvNhlgBccvaRg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="Staging.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="DimGameNumberOnDate.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="DimPerson.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="DimBallPark.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="Retrosheet.conmgr" />
@@ -277,8 +278,6 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">
-                    </SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -609,8 +608,6 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">
-                    </SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -776,8 +773,6 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">
-                    </SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
@@ -840,6 +835,23 @@
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionGUID">{1386636A-9511-4291-B81E-4CE43A30BDA0}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="DimBallPark.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{B07CDB48-5651-40DE-BFAE-52F54E6FA453}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">DimBallPark</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{6EADE1DF-9675-42E7-BEA4-7093B3A73598}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

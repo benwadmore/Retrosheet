@@ -1,5 +1,6 @@
 ﻿CREATE TABLE DW.FactGameSummary
 (
 	GameSummaryId INT IDENTITY(1, 1) NOT NULL,
+	BallParkId INT NOT NULL,
 	CONSTRAINT PK_FactGameSummary PRIMARY KEY CLUSTERED (GameSummaryId)
 )

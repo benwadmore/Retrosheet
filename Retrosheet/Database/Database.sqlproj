@@ -69,6 +69,9 @@
     <Folder Include="Staging\Stored Procedures" />
     <Folder Include="Utility" />
     <Folder Include="Utility\Functions" />
+    <Folder Include="_Publish" />
+    <Folder Include="Utility\Tables" />
+    <Folder Include="Utility\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Staging\Tables\GameLog.sql" />
@@ -87,8 +90,16 @@
     <Build Include="Staging\Stored Procedures\Personnel_Read.sql" />
     <Build Include="Security\Utility.sql" />
     <Build Include="Utility\Functions\DelimitedSplit8K.sql" />
-    <Build Include="DW\Tables\FactGameScore.sql" />
+    <Build Include="DW\Tables\FactGameSummary.sql" />
     <Build Include="DW\Tables\DimDate.sql" />
     <Build Include="DW\Tables\DimPosition.sql" />
+    <Build Include="DW\Stored Procedures\DimBallParkStaging_Create.sql" />
+    <Build Include="DW\Stored Procedures\DimBallPark_Load.sql" />
+    <Build Include="Staging\Stored Procedures\BallPark_Read.sql" />
+    <Build Include="Utility\Tables\ForeignKeys.sql" />
+    <Build Include="Utility\Stored Procedures\ForeignKeys_Create.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_Publish\Local.publish.xml" />
   </ItemGroup>
 </Project>

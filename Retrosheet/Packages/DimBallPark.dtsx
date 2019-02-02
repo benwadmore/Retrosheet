@@ -1,0 +1,701 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/2/2019 8:42:08 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="BEN-PC"
+  DTS:CreatorName="Ben-PC\Ben"
+  DTS:DTSID="{B07CDB48-5651-40DE-BFAE-52F54E6FA453}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="DimBallPark"
+  DTS:PackageType="5"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{EE6FEABF-557C-4C1C-91B5-555ADB72D34E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Staging Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{6add9291-03d8-4190-bcbc-59284c693934}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
+          SQLTask:SqlStatementSource="EXEC DW.DimBallParkStaging_Create;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DimBallPark"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{b5996ce1-26d6-4b6d-8e5f-55ae1412fbeb}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DimBallPark"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
+          SQLTask:SqlStatementSource="EXEC DW.DimBallPark_Load;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DimBallParkStaging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{15f12d76-0cae-491d-9a7a-92c9493bebb2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DimBallParkStaging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load DimBallParkStaging\DW Staging BallPark"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DW Staging BallPark"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[DW].[DimBallParkStaging]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DimBallParkStaging\DW Staging BallPark.Connections[OleDbConnection]"
+                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkId]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ParkId"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkCode]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkId]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ParkName"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkName]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkName]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkAka]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ParkAka"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkAlsoKnownAs]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkAka]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkCity]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ParkCity"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkCity]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkCity]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkState]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ParkState"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkState]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkState]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkStartDate]"
+                      cachedDataType="dbDate"
+                      cachedName="ParkStartDate"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkStartDate]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkStartDate]" />
+                    <inputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].Columns[ParkEndDate]"
+                      cachedDataType="dbDate"
+                      cachedName="ParkEndDate"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkEndDate]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkEndDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="BallParkCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BallParkName" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkAlsoKnownAs]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BallParkAlsoKnownAs" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkCity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BallParkCity" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkState]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="BallParkState" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkStartDate]"
+                      dataType="dbDate"
+                      name="BallParkStartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input].ExternalColumns[BallParkEndDate]"
+                      dataType="dbDate"
+                      name="BallParkEndDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load DimBallParkStaging\DW Staging BallPark.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DimBallParkStaging\DW Staging BallPark.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\DW Staging BallPark.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DimBallParkStaging\DW Staging BallPark.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load DimBallParkStaging\Staging BallPark"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Staging BallPark"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Staging].[Personnel]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC Staging.BallPark_Read</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DimBallParkStaging\Staging BallPark.Connections[OleDbConnection]"
+                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkId]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkId]"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkId]"
+                      name="ParkId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkName]"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkName]"
+                      name="ParkName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkAka]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkAka]"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkAka]"
+                      name="ParkAka"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkCity]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkCity]"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkCity]"
+                      name="ParkCity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkState]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkState]"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkState]"
+                      name="ParkState"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkStartDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkStartDate]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkStartDate]"
+                      name="ParkStartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkEndDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkEndDate]"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].Columns[ParkEndDate]"
+                      name="ParkEndDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ParkId" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ParkName" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkAka]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ParkAka" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkCity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ParkCity" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkState]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ParkState" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkStartDate]"
+                      dataType="dbDate"
+                      name="ParkStartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output].ExternalColumns[ParkEndDate]"
+                      dataType="dbDate"
+                      name="ParkEndDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkId]"
+                      name="ParkId" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkName]"
+                      name="ParkName" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkAka]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkAka]"
+                      name="ParkAka" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkCity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkCity]"
+                      name="ParkCity" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkState]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkState]"
+                      name="ParkState" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkStartDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkStartDate]"
+                      name="ParkStartDate" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkEndDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ParkEndDate]"
+                      name="ParkEndDate" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load DimBallParkStaging.Paths[OLE DB Source Output]"
+              endId="Package\Load DimBallParkStaging\DW Staging BallPark.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load DimBallParkStaging\Staging BallPark.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2e5c7ad6-3065-4326-bfb4-5ca65c5931ae}"
+      DTS:From="Package\Create Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load DimBallParkStaging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{ad9521af-5b3a-403d-95d9-f8ef7fe5487d}"
+      DTS:From="Package\Load DimBallParkStaging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load DimBallPark" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Create Staging Table"
+          TopLeft="60,60" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Load DimBallPark"
+          TopLeft="74,228" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Load DimBallParkStaging"
+          TopLeft="68,149" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="148.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.5,47"
+              Start="0,0"
+              End="17.5,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="4,23.5" />
+                  <mssgle:LineSegment
+                    End="13.5,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.5,23.5"
+                    Point2="17.5,23.5"
+                    Point3="17.5,27.5" />
+                  <mssgle:LineSegment
+                    End="17.5,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="166,191">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.5,37"
+              Start="0,0"
+              End="-14.5,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5"
+                    Point2="0,18.5"
+                    Point3="-4,18.5" />
+                  <mssgle:LineSegment
+                    End="-10.5,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.5,18.5"
+                    Point2="-14.5,18.5"
+                    Point3="-14.5,22.5" />
+                  <mssgle:LineSegment
+                    End="-14.5,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load DimBallParkStaging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Load DimBallParkStaging\DW Staging BallPark"
+          TopLeft="121,157" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Load DimBallParkStaging\Staging BallPark"
+          TopLeft="123,58" />
+        <EdgeLayout
+          Id="Package\Load DimBallParkStaging.Paths[OLE DB Source Output]"
+          TopLeft="200.5,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8,57"
+              Start="0,0"
+              End="8,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5"
+                    Point2="0,28.5"
+                    Point3="4,28.5" />
+                  <mssgle:LineSegment
+                    End="4,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4,28.5"
+                    Point2="8,28.5"
+                    Point3="8,32.5" />
+                  <mssgle:LineSegment
+                    End="8,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load DimBallParkStaging\DW Staging BallPark">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load DimBallParkStaging\Staging BallPark">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
