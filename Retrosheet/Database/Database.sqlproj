@@ -98,6 +98,10 @@
     <Build Include="Staging\Stored Procedures\BallPark_Read.sql" />
     <Build Include="Utility\Tables\ForeignKeys.sql" />
     <Build Include="Utility\Stored Procedures\ForeignKeys_Create.sql" />
+    <Build Include="DW\Tables\DimTeam.sql" />
+    <Build Include="Staging\Stored Procedures\Franchise_Read.sql" />
+    <Build Include="DW\Stored Procedures\DimTeamStaging_Create.sql" />
+    <Build Include="DW\Stored Procedures\DimTeam_Load.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Publish\Local.publish.xml" />

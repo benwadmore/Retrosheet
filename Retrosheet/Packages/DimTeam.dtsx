@@ -1,0 +1,854 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/5/2019 8:43:12 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="BEN-PC"
+  DTS:CreatorName="Ben-PC\Ben"
+  DTS:DTSID="{EF655E1D-92C6-40BD-BE8C-C16B55E84D85}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="DimTeam"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{4DC11536-E2C3-469A-8733-0832F5E9555F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Staging Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{49F2F32B-A145-40ED-BCCF-99A06895C886}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
+          SQLTask:SqlStatementSource="EXEC DW.DimTeamStaging_Create;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DimTeam"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{550CCAE7-AC91-432F-A0D1-2FC5E7907670}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DimTeam"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}"
+          SQLTask:SqlStatementSource="EXEC DW.DimTeam_Load;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DimTeamStaging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{DBD1BC4A-EFBA-4A0E-A164-ED2C46220FA0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DimTeamStaging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load DimTeamStaging\DW Staging Team"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DW Staging Team"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[DW].[DimTeamStaging]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DimTeamStaging\DW Staging Team.Connections[OleDbConnection]"
+                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[League]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="League"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[League]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[League]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[Division]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Division"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Division]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Division]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[Location]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Location"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Location]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[Nickname]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Nickname"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Nickname]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Nickname]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[AlternateNicknames]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AlternateNicknames"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[AlternateNicknames]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[AlternateNicknames]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[State]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[FirstGameDate]"
+                      cachedDataType="dbDate"
+                      cachedName="FirstGameDate"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[FirstGameDate]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[FirstGameDate]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[LastGameDate]"
+                      cachedDataType="dbDate"
+                      cachedName="LastGameDate"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[LastGameDate]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[LastGameDate]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[CurrentFranchiseId]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="CurrentFranchiseId"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[CurrentFranchiseCode]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[CurrentFranchiseId]" />
+                    <inputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].Columns[ActualFranchiseId]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="ActualFranchiseId"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[ActualFranchiseCode]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[ActualFranchiseId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[CurrentFranchiseCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="CurrentFranchiseCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[ActualFranchiseCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="ActualFranchiseCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[League]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="League" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Division]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Division" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[Nickname]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Nickname" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[AlternateNicknames]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="AlternateNicknames" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[FirstGameDate]"
+                      dataType="dbDate"
+                      name="FirstGameDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[LastGameDate]"
+                      dataType="dbDate"
+                      name="LastGameDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="State" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load DimTeamStaging\DW Staging Team.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DimTeamStaging\DW Staging Team.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\DW Staging Team.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DimTeamStaging\DW Staging Team.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load DimTeamStaging\Staging Franchise"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Staging Franchise"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC Staging.Franchise_Read;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DimTeamStaging\Staging Franchise.Connections[OleDbConnection]"
+                  connectionManagerID="{D40AC3D8-1F51-4DB9-AAE6-916F950716E6}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Retrosheet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[CurrentFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[CurrentFranchiseId]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[CurrentFranchiseId]"
+                      name="CurrentFranchiseId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[ActualFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[ActualFranchiseId]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[ActualFranchiseId]"
+                      name="ActualFranchiseId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[League]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[League]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[League]"
+                      name="League"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Division]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Division]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Division]"
+                      name="Division"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Location]"
+                      name="Location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Nickname]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Nickname]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[Nickname]"
+                      name="Nickname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[AlternateNicknames]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[AlternateNicknames]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[AlternateNicknames]"
+                      name="AlternateNicknames"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[FirstGameDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[FirstGameDate]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[FirstGameDate]"
+                      name="FirstGameDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[LastGameDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[LastGameDate]"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].Columns[LastGameDate]"
+                      name="LastGameDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[CurrentFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CurrentFranchiseId" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[ActualFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ActualFranchiseId" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[League]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="League" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Division]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Division" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[Nickname]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Nickname" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[AlternateNicknames]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AlternateNicknames" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[FirstGameDate]"
+                      dataType="dbDate"
+                      name="FirstGameDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output].ExternalColumns[LastGameDate]"
+                      dataType="dbDate"
+                      name="LastGameDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[CurrentFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[CurrentFranchiseId]"
+                      name="CurrentFranchiseId" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ActualFranchiseId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ActualFranchiseId]"
+                      name="ActualFranchiseId" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[League]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[League]"
+                      name="League" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Division]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Division]"
+                      name="Division" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      name="Location" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Nickname]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[Nickname]"
+                      name="Nickname" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[AlternateNicknames]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[AlternateNicknames]"
+                      name="AlternateNicknames" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[State]"
+                      name="State" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[FirstGameDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[FirstGameDate]"
+                      name="FirstGameDate" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[LastGameDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[LastGameDate]"
+                      name="LastGameDate" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load DimTeamStaging.Paths[OLE DB Source Output]"
+              endId="Package\Load DimTeamStaging\DW Staging Team.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load DimTeamStaging\Staging Franchise.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{067914E2-44E7-4517-89E0-F606A0936734}"
+      DTS:From="Package\Create Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load DimTeamStaging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5642441C-6C07-462C-BCCA-7832715A0581}"
+      DTS:From="Package\Load DimTeamStaging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load DimTeam" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Create Staging Table"
+          TopLeft="120,57" />
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Load DimTeamStaging"
+          TopLeft="135,154" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="208.5,99">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19,55"
+              Start="0,0"
+              End="19,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="15,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15,27.5"
+                    Point2="19,27.5"
+                    Point3="19,31.5" />
+                  <mssgle:LineSegment
+                    End="19,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load DimTeam"
+          TopLeft="144,251" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="227.5,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8.5,55"
+              Start="0,0"
+              End="-8.5,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="-4,27.5" />
+                  <mssgle:LineSegment
+                    End="-4.5,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.5,27.5"
+                    Point2="-8.5,27.5"
+                    Point3="-8.5,31.5" />
+                  <mssgle:LineSegment
+                    End="-8.5,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load DimTeamStaging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="162,42"
+          Id="Package\Load DimTeamStaging\Staging Franchise"
+          TopLeft="132,47" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Load DimTeamStaging\DW Staging Team"
+          TopLeft="123,132" />
+        <EdgeLayout
+          Id="Package\Load DimTeamStaging.Paths[OLE DB Source Output]"
+          TopLeft="213,89">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,43"
+              Start="0,0"
+              End="-8,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="-4,21.5" />
+                  <mssgle:LineSegment
+                    End="-4,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,21.5"
+                    Point2="-8,21.5"
+                    Point3="-8,25.5" />
+                  <mssgle:LineSegment
+                    End="-8,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load DimTeamStaging\Staging Franchise">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load DimTeamStaging\DW Staging Team">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,16 @@
+﻿CREATE TABLE DW.DimTeam
+(
+	TeamId INT IDENTITY(1, 1) NOT NULL,
+	CurrentFranchiseCode VARCHAR(3) NOT NULL,
+	ActualFranchiseCode VARCHAR(3) NOT NULL,
+	League VARCHAR(2) NOT NULL,
+	Division VARCHAR(1) NOT NULL,
+	[Location] VARCHAR(30) NOT NULL,
+	Nickname VARCHAR(30) NOT NULL,
+	AlternateNicknames VARCHAR(30) NOT NULL,
+	FirstGameDate DATE NOT NULL,
+	LastGameDate DATE NULL,
+	City VARCHAR(30) NOT NULL,
+	[State] VARCHAR(2) NOT NULL,
+	CONSTRAINT PK_DimTeam PRIMARY KEY CLUSTERED (TeamId)
+);
