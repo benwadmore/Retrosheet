@@ -1,5 +1,10 @@
 ﻿CREATE TABLE DW.DimDate
 (
 	DateId DATE NOT NULL,
+	DayOfWeekNumber TINYINT NOT NULL,
+	DayOfWeekName VARCHAR(10) NOT NULL,
+	CalendarWeekName VARCHAR(10) NOT NULL,
+	CalendarMonthName VARCHAR(10) NOT NULL,
+	CalendarYearName VARCHAR(10) NOT NULL,
 	CONSTRAINT PK_DimDate PRIMARY KEY CLUSTERED (DateId)
 )
